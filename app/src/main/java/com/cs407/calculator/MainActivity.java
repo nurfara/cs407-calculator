@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         multiplyButton = findViewById(R.id.multiplyButton);
         divideButton = findViewById(R.id.divideButton);
 
+        // set click listeners for each button
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // This function opens ResultActivity and passes data
     private void openResultActivity(char operation) {
+        Log.i("INFO",Character.toString(operation));
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putExtra("num1", Integer.parseInt(firstNum.getText().toString()));
         intent.putExtra("num2", Integer.parseInt(secondNum.getText().toString()));
@@ -71,3 +75,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
+// easiest idea: create 4 different onclick & calc fn, assign each op

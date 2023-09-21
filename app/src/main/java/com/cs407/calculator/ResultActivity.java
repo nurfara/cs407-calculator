@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 public class ResultActivity extends AppCompatActivity {
-
     TextView resultText; // to show the result from the intent
 
     @Override
@@ -15,17 +15,17 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
+        // get data from MainActivity
         Intent intent = getIntent();
         int num1 = intent.getIntExtra("num1", 0);
         int num2 = intent.getIntExtra("num2", 0);
         char operation = intent.getCharExtra("operation", '+');
-
-        resultText = findViewById(R.id.resultText);
-        int result = calcResult(num1, num2, operation);
-        resultText.setText(result);
-
+        resultText = (TextView)findViewById(R.id.resultText);
+        int result = calcResult(num1, num2, operation); // pass to calc function
+        resultText.setText("" + result); // arg must be a string
     }
 
+    // This function does the calculation based on the operation specified
     private int calcResult(int num1, int num2, char operation) {
         int result = 0;
         switch(operation) {
@@ -44,5 +44,4 @@ public class ResultActivity extends AppCompatActivity {
         }
         return result;
     }
-
 }
