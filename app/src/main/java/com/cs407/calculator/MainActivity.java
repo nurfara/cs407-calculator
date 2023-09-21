@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     EditText firstNum, secondNum;
@@ -31,42 +32,61 @@ public class MainActivity extends AppCompatActivity {
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openResultActivity('+');
+                if (validateInput()) {
+                    openResultActivity('+');
+                }
             }
         });
 
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openResultActivity('-');
+                if (validateInput()) {
+                    openResultActivity('-');
+                }
             }
         });
 
         multiplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openResultActivity('*');
+                if (validateInput()) {
+                    openResultActivity('*');
+                }
             }
         });
 
         divideButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // check if secondNum is 0 or not
-                int num2 = Integer.parseInt(secondNum.getText().toString());
-                if (num2 != 0) {
-                    openResultActivity('/');
-                } else {
-                    // TODO handle div by 0 here. error message.
+                if (validateInput()) {
+                    // check if secondNum is 0 or not
+                    int num2 = Integer.parseInt(secondNum.getText().toString());
+                    if (num2 != 0) {
+                        openResultActivity('/');
+                    } else {
+                        Toast.makeText(MainActivity.this, "Error: Cannot divide by 0", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
 
     }
+    // This function validates user input (Textfield should only accept integers)
+    private boolean validateInput() {
+        try {
+            // try to parse input as int
+            Integer.parseInt(firstNum.getText().toString());
+            Integer.parseInt(secondNum.getText().toString());
+            return true;
+        } catch (NumberFormatException e) {
+            Toast.makeText(MainActivity.this, "Error: Please enter valid integers", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
 
     // This function opens ResultActivity and passes data
     private void openResultActivity(char operation) {
-        Log.i("INFO",Character.toString(operation));
         Intent intent = new Intent(this, ResultActivity.class);
         intent.putExtra("num1", Integer.parseInt(firstNum.getText().toString()));
         intent.putExtra("num2", Integer.parseInt(secondNum.getText().toString()));
@@ -75,4 +95,3 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-// easiest idea: create 4 different onclick & calc fn, assign each op
