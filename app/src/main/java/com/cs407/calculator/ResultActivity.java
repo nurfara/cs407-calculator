@@ -21,13 +21,13 @@ public class ResultActivity extends AppCompatActivity {
         int num2 = intent.getIntExtra("num2", 0);
         char operation = intent.getCharExtra("operation", '+');
         resultText = (TextView)findViewById(R.id.resultText);
-        int result = calcResult(num1, num2, operation); // pass to calc function
-        resultText.setText("" + result); // arg must be a string
+        double result = calcResult(num1, num2, operation); // pass to calc function
+        resultText.setText(String.format("%.1f", result)); // arg must be a string
     }
 
     // This function does the calculation based on the operation specified
-    private int calcResult(int num1, int num2, char operation) {
-        int result = 0;
+    private double calcResult(int num1, int num2, char operation) {
+        double result = 0.0;
         switch(operation) {
             case '+':
                 result = num1 + num2;
@@ -39,7 +39,7 @@ public class ResultActivity extends AppCompatActivity {
                 result = num1 * num2;
                 break;
             case '/':
-                result = num1 / num2;
+                result = (double) num1 / num2;
                 break;
         }
         return result;
