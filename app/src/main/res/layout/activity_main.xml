@@ -54,7 +54,8 @@
         android:textSize="20dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/minusButton"
         app:layout_constraintEnd_toStartOf="@+id/minusButton"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <Button
         android:id="@+id/minusButton"

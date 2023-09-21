@@ -9,28 +9,65 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
+    EditText firstNum, secondNum;
+    Button plusButton, minusButton, multiplyButton, divideButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-    }
 
-    public void clickFunction(View view) {
-        EditText firstNum = findViewById(R.id.firstNum);
-        EditText secondNum = findViewById(R.id.secondNum);
-        String firstNumStr = firstNum.getText().toString();
-        String secondNumStr = secondNum.getText().toString();
-        if (!firstNumStr.isEmpty() && !secondNumStr.isEmpty()) {
-            int num1 = Integer.parseInt(firstNumStr);
-            int num2 = Integer.parseInt(secondNumStr);
+        firstNum = findViewById(R.id.firstNum);
+        secondNum = findViewById(R.id.secondNum);
 
-            switch(view.getId()) {
-             //   case R.id.plusButton: //FIXME
-              //      break;
+        plusButton = findViewById(R.id.plusButton);
+        minusButton = findViewById(R.id.minusButton);
+        multiplyButton = findViewById(R.id.multiplyButton);
+        divideButton = findViewById(R.id.divideButton);
+
+        plusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openResultActivity('+');
             }
-        }
+        });
+
+        minusButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openResultActivity('-');
+            }
+        });
+
+        multiplyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openResultActivity('*');
+            }
+        });
+
+        divideButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // check if secondNum is 0 or not
+                int num2 = Integer.parseInt(secondNum.getText().toString());
+                if (num2 != 0) {
+                    openResultActivity('/');
+                } else {
+                    // TODO handle div by 0 here. error message.
+                }
+            }
+        });
+
     }
 
+    private void openResultActivity(char operation) {
+        Intent intent = new Intent(this, ResultActivity.class);
+        intent.putExtra("num1", Integer.parseInt(firstNum.getText().toString()));
+        intent.putExtra("num2", Integer.parseInt(secondNum.getText().toString()));
+        intent.putExtra("operation", operation);
+        startActivity(intent);
+    }
 
 }
